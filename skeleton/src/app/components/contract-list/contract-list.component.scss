@@ -1,0 +1,9 @@
+.card1 {
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
+  }
+  
+  .card1:active {
+    transform: scale(0.95); /* Stronger scale down effect */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4); /* Stronger shadow effect */
+  }
+  

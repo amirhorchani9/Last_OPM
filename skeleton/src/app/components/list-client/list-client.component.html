@@ -1,0 +1,28 @@
+<app-card cardTitle="Technician List" [options]="false">
+  <div class="row">
+    <div class="col text-left">
+      <br>
+    </div>
+    <div class="col text-right">
+    </div>
+  </div>
+  <br>
+  <div class="table-responsive">
+    <table
+      style="text-align: center; margin-left: 20px; margin-right: 20px;"
+      id="dataTable"
+      datatable
+      [dtOptions]="dtOptions"
+      class="table table-bordered table-hover"
+    >
+      <thead class="bg-primary">
+        <tr>
+          <!-- Table headers -->
+        </tr>
+      </thead>
+      <tbody style="background-color: rgb(204, 228, 255);">
+        <!-- Data rows will be populated here -->
+      </tbody>
+    </table>
+  </div>
+</app-card>
