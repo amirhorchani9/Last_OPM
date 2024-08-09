@@ -503,31 +503,47 @@ exports.getContractByCientId = async (req, res) => {
 };
 exports.addFileToContract = async (req, res) => {
   try {
-    const files = req.files; // Get the array of uploaded files
-    // console.log(req.body._id);
+    const contratSigneFiles = req.files.contratSigneFiles || [];
+    const matriceDescaladeFiles = req.files.matriceDescaladeFiles || [];
+
     const uploadedFiles = [];
- 
-    for (const file of files) {
+
+    // Process "Contrat Signé" files
+    for (const file of contratSigneFiles) {
       const newFile = File({
         fileName: file.filename,
-        path: 'http://localhost:3000/'+file.destination + '/' + file.filename,
-        title:file.originalname.toString(),
+        path: 'http://localhost:3000/' + file.destination + '/' + file.filename,
+        title: file.originalname.toString(),
       });
       await newFile.save();
       uploadedFiles.push(newFile);
     }
-      const contract = await Contract.findByIdAndUpdate(
-        req.body._id ,
-        { $push: { listOfFiles: uploadedFiles } },
-        { new: true }
-       );
-       res.status(200).json({ 
-        err: false, 
-        message: "Successful operation !", 
-       rows: [contract, files.map(file => file.originalname)] 
+
+    // Process "Matrice D'escalade" files
+    for (const file of matriceDescaladeFiles) {
+      const newFile = File({
+        fileName: file.filename,
+        path: 'http://localhost:3000/' + file.destination + '/' + file.filename,
+        title: file.originalname.toString(),
       });
+      await newFile.save();
+      uploadedFiles.push(newFile);
+    }
+
+    const contract = await Contract.findByIdAndUpdate(
+      req.body._id,
+      { $push: { listOfFiles: uploadedFiles } },
+      { new: true }
+    );
+
+    res.status(200).json({
+      err: false,
+      message: "Successful operation!",
+      rows: [contract, [...contratSigneFiles, ...matriceDescaladeFiles].map(file => file.originalname)]
+    });
 
   } catch (error) {
     res.status(500).json({ err: true, message: error.message });
   }
 };
+

@@ -40,7 +40,7 @@ export class ContractListComponent implements OnInit {
   }
   
   navigateToDetails(id: string) {
-    this.router.navigate(['/test/folderDerailes/detailes', id]);
+    this.router.navigate(['main/test/folderDerailes/detailes', id]);
   }
   openAddFolder(){
     const modalRef = this.modalService.open(AddUpdateFoldersComponent);

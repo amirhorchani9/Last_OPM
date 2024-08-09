@@ -31,7 +31,7 @@
                                 <tr>
                                     <th class="text-center" class="border-top-0">Title</th>
                                     <th class="text-center" class="border-top-0">Site Name</th>
-                                    <th class="text-center" class="border-top-0">Equipment Name:</th>
+                                    <th class="text-center" class="border-top-0">Equipment Name</th>
                                     <th class="text-center" class="border-top-0">Equipment Ref</th>
                                     <th class="text-center" class="border-top-0">Assigned to</th>
                                     <th class="text-center" class="border-top-0">Priority</th>
@@ -51,11 +51,11 @@
                                     <td class="text-center"  >
                                         <ng-container *ngFor="let item2 of item.technicienId">
 
-                                            <a href="javascript:"><img width="40px" height="40px" srcset=""
+                                           <img width="40px" height="40px" srcset=""
                                                     style="border-radius: 50%; border: 2px solid rgb(255, 255, 255);"
                                                     class="img-fluid img-radius mr-1" src="{{item2.image.path}}" alt=""
                                                     [placement]="'bottom'"
-                                                    ngbTooltip="{{item2.firstName +' '+item2.lastName}}"></a>
+                                                    ngbTooltip="{{item2.firstName +' '+item2.lastName}}">
                                         </ng-container>
                                         <a href="javascript:"><i class="fas fa-plus"></i></a>
                                     </td>
@@ -142,22 +142,32 @@
     </div>
     <div class="modal-body">
       <!-- Display ticket details here -->
-      <p><strong>Title:</strong> {{selectedTicket.title}}</p>
-      <p><strong>Site Name:</strong> {{selectedTicket.siteId.nomSite}} : {{selectedTicket.siteId.adress}}</p>
-      <p><strong>Equipment Name:</strong> {{selectedTicket.equipmentHardId?.nomPice}}</p>
-      <p><strong>Equipment Ref:</strong> {{selectedTicket.equipmentHardId?.SN}}</p>
-      <p><strong>Assigned to:</strong> 
-        <ng-container *ngFor="let tech of selectedTicket.technicienId">
-          {{tech.firstName}} {{tech.lastName}}
-        </ng-container>
-      </p>
-      <p><strong>Priority:</strong> {{selectedTicket.neveuxEsclade}}</p>
-      <p><strong>Date of creation:</strong> {{selectedTicket.creationDate | date:'yyyy-MM-dd HH:mm'}}</p>
-      <p><strong>Status:</strong> {{selectedTicket.status}}</p>
+      <div class="ticket-detail">
+        <p><span class="detail-label">Title</span> {{selectedTicket.title}}</p>
+        <p><span class="detail-label">Site Name:</span> {{selectedTicket.siteId.nomSite}} : {{selectedTicket.siteId.adress}}</p>
+        <p><span class="detail-label">Equipment Name:</span> {{selectedTicket.equipmentHardId?.nomPice}}</p>
+        <p><span class="detail-label">Equipment Ref:</span> {{selectedTicket.equipmentHardId?.SN}}</p>
+        <p><span class="detail-label">Assigned to:</span> 
+            <ng-container *ngFor="let item3 of selectedTicket.technicienId" >
+                <img width="40px" height="40px" srcset=""
+                        style="border-radius: 50%; border: 2px solid rgb(255, 255, 255);"
+                        
+                        class="img-fluid img-radius mr-1" src="{{item3.image.path}}" alt=""
+                        [placement]="'bottom'"
+                        ngbTooltip="{{item3.firstName +' '+item3.lastName}}">
+                        {{item3.firstName +' '+item3.lastName}}
+
+            </ng-container>
+        </p>
+        <p><span class="detail-label">Priority:</span> {{selectedTicket.neveuxEsclade}}</p>
+        <p><span class="detail-label">Date of creation:</span> {{selectedTicket.creationDate | date:'yyyy-MM-dd HH:mm'}}</p>
+        <p><span class="detail-label">Status:</span> {{selectedTicket.status}}</p>
+      </div>
     </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-secondary" (click)="modal.dismiss('Close click')">Close</button>
     </div>
   </ng-template>
+  
   
   

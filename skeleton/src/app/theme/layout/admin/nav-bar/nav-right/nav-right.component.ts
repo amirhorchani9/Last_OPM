@@ -5,6 +5,8 @@ import { DattaConfig } from '../../../../../app-config';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 import { AuthService } from 'src/app/services/auth.service';
+import { environment } from 'src/environments/environment';
+import { map, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-nav-right',
@@ -32,11 +34,12 @@ import { AuthService } from 'src/app/services/auth.service';
     ])
   ]
 })
-export class NavRightComponent implements OnInit, DoCheck {
+export class NavRightComponent implements DoCheck {
   public visibleUserList: boolean;
   public chatMessage: boolean;
   public friendId: boolean;
   public eliteConfig: any;
+  
 
   // New properties for user info
   public userName: string;
@@ -52,21 +55,28 @@ export class NavRightComponent implements OnInit, DoCheck {
     this.visibleUserList = false;
     this.chatMessage = false;
     this.eliteConfig = DattaConfig.config;
+
   }
 
-  ngOnInit() {
-     // Retrieve user information from AuthService
-     const user = this.authService.getAuthUser().user;
-     console.log(user)
-     if (user) {
-       this.userName = user.firstName;
-       this.lastName = user.lastName;
-       console.log(this.userName)
-       this.userImage = user.image.path; // Assuming 'image' is a URL or path to the image
-       console.log(this.userImage)
-     }
-  }
-  
+  user$ = this.authService.authenticatedUser$.pipe(
+    map(user => user.user),
+    map(user => {
+      if (user) {
+        if (user.authority == 'technician') { // Use '===' for comparison
+          const image = `${environment.apiUrl}/uploads/${user.image.fileName}`; 
+          return { userName: user.firstName, lastName : user.lastName, userImage :  image }
+        } else 
+        if(user.authority == 'admin'){
+          const image  = `${environment.apiUrl}/uploads/noPicProfile.jpg`; 
+          return { userName: user.firstName, lastName : user.lastName, userImage :  image }
+        }
+        else{
+          const image = `${environment.apiUrl}/uploads/noPicProfile.jpg`;
+          return { userName: user.company, lastName : null, userImage :  image }
+       }
+      }
+    }),
+  )
 
   onChatToggle(friend_id) {
     this.friendId = friend_id;
@@ -92,9 +102,7 @@ export class NavRightComponent implements OnInit, DoCheck {
       reverseButtons: true
     }).then((result) => {
       if (result.isConfirmed) {
-        // Clear session storage and navigate to sign-in page
-        sessionStorage.clear();
-        this.router.navigate(['/auth/signin']);
+      this.authService.logout()
       }
     });
   }

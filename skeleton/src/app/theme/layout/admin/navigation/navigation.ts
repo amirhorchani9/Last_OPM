@@ -34,53 +34,44 @@ const adminNavigation = [
     children: [
       {
         id: 'sample-page',
-        title: 'Sample Page',
+        title: 'Dashboard',
         type: 'item',
-        url: '/sample-page',
+        url: '/main/sample-page',
         classes: 'nav-item',
-        icon: 'feather icon-sidebar'
+        icon: 'feather icon-grid'
       },
       {
         id: 'ListUser',
         title: 'Technician account', 
         type: 'item',
-        url: '/test/listTechnician',
+        url: '/main/test/listTechnician',
         classes: 'nav-item',
-        icon: 'feather icon-sidebar'
+        icon: 'feather icon-users'
       },
       {
         id: 'listContrct',
         title: 'Client Folders',
         type: 'item',
-        url: '/test/listContract',
+        url: '/main/test/listContract',
         classes: 'nav-item',
-        icon: 'feather icon-sidebar'
+        icon: 'feather icon-folder'
       },
       {
         id: 'listTypeSupport',
         title: 'Type Support',
         type: 'item',
-        url: '/test/typesupports',
+        url: '/main/test/typesupports',
         classes: 'nav-item',
         icon: 'feather icon-sidebar'
       },
-      {
+      { 
         id: 'CalnderAdmin',
         title: 'Calendar',
         type: 'item',
-        url: '/test/clanderVisitepreventive',
+        url: '/main/test/clanderVisitepreventive',
         classes: 'nav-item',
-        icon: 'feather icon-sidebar'
-        },
-        {
-          id: 'clientListContract',
-          title: 'List of customer contracts',
-          type: 'item',
-          url: '/clientMang/contract-List-Cli',
-          classes: 'nav-item',
-          icon: 'feather icon-sidebar'
-          },
-      
+        icon: 'feather icon-calendar'
+        }, 
     ]
   },
 ]
@@ -94,21 +85,21 @@ const clientNavigation = [
     children: [
       {
         id: 'sample-page',
-        title: 'Sample Page',
+        title: 'Dashboard',
         type: 'item',
-        url: '/sample-page',
+        url: '/main/sample-page',
         classes: 'nav-item',
-        icon: 'feather icon-sidebar'
+        icon: 'feather icon-grid'
       },
       
-        {
+      {
           id: 'clientListContract',
           title: 'List of customer contracts',
           type: 'item',
-          url: '/clientMang/contract-List-Cli',
+          url: '/main/clientMang/contract-List-Cli',
           classes: 'nav-item',
-          icon: 'feather icon-sidebar'
-          },
+          icon: 'feather icon-file-text'
+      },
    
     ]
   }
@@ -123,27 +114,29 @@ const technicianNavigation = [
     children: [
       {
         id: 'sample-page',
-        title: 'Sample Page',
+        title: 'Dashboard',
         type: 'item',
-        url: '/sample-page',
+        url: '/main/sample-page',
         classes: 'nav-item',
-        icon: 'feather icon-sidebar'
+        icon: 'feather icon-grid'
+      },
+      {
+        id: 'listTypeSupport',
+        title: 'Type Support',
+        type: 'item',
+        url: '/main/test/typesupports',
+        classes: 'nav-item',
+        icon: 'feather icon-users'
       },
       {
         id: 'ListUser',
         title: 'Technician account', 
         type: 'item',
-        url: '/test/listTechnician',
+        url: '/main/test/listTechnician',
         classes: 'nav-item',
-        icon: 'feather icon-sidebar'
-      },  {
-        id: 'listTypeSupport',
-        title: 'Type Support',
-        type: 'item',
-        url: '/test/typesupports',
-        classes: 'nav-item',
-        icon: 'feather icon-sidebar'
-      },
+        icon: 'feather icon-users'
+      }, 
+     
       
     ]
   }
@@ -152,12 +145,18 @@ const technicianNavigation = [
 @Injectable()
 export class NavigationItem {
   get userRole() {
-    return sessionStorage.getItem("authority")
+    return localStorage.getItem("AUTHORITY");
   }
 
   get() {
-    if (this.userRole === 'admin') return adminNavigation
-    if (this.userRole === 'clientManger') return clientNavigation
-    return technicianNavigation;
+    if (this.userRole === 'admin') {
+      return adminNavigation;
+    }
+    if (this.userRole === 'clientManger' || this.userRole === 'clientUser') {
+      return clientNavigation;
+    }
+    if (this.userRole === 'technician') {
+      return technicianNavigation;
+    }
   }
 }

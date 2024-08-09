@@ -1,13 +1,17 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AdminComponent } from './theme/layout/admin/admin.component';
-import { AuthComponent } from './theme/layout/auth/auth.component';
 import { LoginGuard } from './guards/login.guard';
 import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
   {
-    path: '',
+    path : '',
+    redirectTo : 'auth',
+    pathMatch : 'full'
+  },
+  {
+    path: 'main',
     component: AdminComponent,
     canActivate: [AuthGuard],
     children: [
@@ -31,15 +35,10 @@ const routes: Routes = [
       }
     ]
   },
-  {
-    path: '',
-    component: AuthComponent,
-    children: []
-  },
+
   {
     path: 'auth',
-    loadChildren: () => import('./components/authentication/authentication.module').then(m => m.AuthenticationModule),  canActivate: [LoginGuard]
-  }
+    loadChildren: () => import('./components/authentication/authentication.module').then(m => m.AuthenticationModule)}
 ];
 
 @NgModule({

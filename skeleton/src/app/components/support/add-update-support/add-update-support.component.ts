@@ -43,8 +43,6 @@ export class AddUpdateSupportComponent implements OnInit {
   Onsubmit(f: NgForm) {
     if(this.add){
       const payload={...f.value};
-      // console.log(payload);
-      // console.log(payload);
       const fd = new FormData();
       fd.append('supportName', this.model.supportName)
       fd.append('supportEmail', this.model.supportEmail)

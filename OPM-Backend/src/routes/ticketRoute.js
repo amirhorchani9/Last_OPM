@@ -5,6 +5,7 @@ const upload = require('../middlewares/fileMiddlewareAny');
 
 router.post('/createTicket',upload.array('files'),  ticketController.createTicket);
 router.get('/getAllTicketByClientIdAndContract/:clientId/:contractId', ticketController.getAllTicketByClientIdAndContract);
+router.get('/getAllTicketByContract/:contractId', ticketController.getAllTicketByContract);
 router.put('/updateTicket',ticketController.updateTicket);
 
 

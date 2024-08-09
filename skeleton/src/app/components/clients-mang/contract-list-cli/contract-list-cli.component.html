@@ -38,9 +38,9 @@
             </div>
             <div class="task-board">
               <div class="dropdown-secondary m-r-5 dropdown"  placement="auto">
-                <button *ngIf="this.comperDateContract(item.startDate,item.endDate) == 1" class="btn btn-success btn-sm"  type="button" id="dropdown1" [routerLink]="['/clientMang/customer-tickets/tiketes-List', item._id]">Show Details</button>
-                <button *ngIf="this.comperDateContract(item.startDate,item.endDate) == 2" class="btn btn-warning btn-sm"  type="button" id="dropdown1" [routerLink]="['/clientMang/customer-tickets/tiketes-List', item._id]">Show Details</button>
-                <button *ngIf="this.comperDateContract(item.startDate,item.endDate) == 3" class="btn btn-danger btn-sm"  type="button" id="dropdown1" [routerLink]="['/clientMang/customer-tickets/tiketes-List', item._id]">Show Details</button>
+                <button *ngIf="this.comperDateContract(item.startDate,item.endDate) == 1" class="btn btn-success btn-sm"  type="button" id="dropdown1" [routerLink]="['/main/clientMang/customer-tickets/tiketes-List', item._id]">Show Details</button>
+                <button *ngIf="this.comperDateContract(item.startDate,item.endDate) == 2" class="btn btn-warning btn-sm"  type="button" id="dropdown1" [routerLink]="['/main/clientMang/customer-tickets/tiketes-List', item._id]">Show Details</button>
+                <button *ngIf="this.comperDateContract(item.startDate,item.endDate) == 3" class="btn btn-danger btn-sm"  type="button" id="dropdown1" [routerLink]="['/main/clientMang/customer-tickets/tiketes-List', item._id]">Show Details</button>
               </div>
             </div>
           </app-card>

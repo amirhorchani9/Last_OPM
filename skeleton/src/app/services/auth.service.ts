@@ -23,11 +23,11 @@ export class AuthService {
 
 
   getToken(){
-    return this.tokenSubject.value;
+    return localStorage.getItem("OPM_TOKEN")
   }
 
   setToken(token: string){
-    localStorage.setItem("opm_token", token)
+    localStorage.setItem("OPM_TOKEN", token)
   }
 
 
@@ -46,16 +46,12 @@ export class AuthService {
   login(auth: any) {
     return this._http.post(`${this.baseUrl}/login`, auth).pipe(
       tap((response: any) => {
-        // console.log(response)
         const p = response.payload;
         const t = response.accessToken;
-        const d = { ...t, ...p };
-        // console.log(t)
         this.setToken(t)
-        this.saveAuthToLS(d)
+        this.saveAuthToLS(p)
         this.isAuthenticated.next(true);
-        this.authenticatedUser.next(response.data);
-        this._router.navigate(['/sample-page'])
+        this.authenticatedUser.next(response.payload);
       })
     )
   }
@@ -89,8 +85,8 @@ export class AuthService {
   logout() {
     this.authenticatedUser.next(null);
     this.isAuthenticated.next(false)
-    localStorage.removeItem(this.OPM_APP_KEY);
-    this._router.navigateByUrl("/")
+    localStorage.clear;
+    this._router.navigateByUrl("/auth/signin")
   }
 
   autoLogout(expirationDuration: number) {

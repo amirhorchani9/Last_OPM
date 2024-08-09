@@ -1,11 +1,14 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { AuthComponent } from '../../theme/layout/auth/auth.component';
 const routes: Routes = [
   {
     path: '',
-    component: AuthComponent,
     children: [
+      {
+        path : '',
+        redirectTo : 'signin',
+        pathMatch : 'full'
+      },
       {
         path: 'signup',
         loadChildren: () => import('./auth-signup/auth-signup.module').then(m => m.AuthSignupModule)

@@ -95,6 +95,28 @@ exports.getAllTicketByClientIdAndContract = async (req, res) => {
 
   }
 };
+exports.getAllTicketByContract = async (req, res) => {
+  const contractId = req.params.contractId;
+  try {
+    const tickets = await Ticket.find({ contractId })
+    .sort({ creationDate: -1 })
+    .populate('siteId')
+    .populate('equipmentHardId')
+    .populate('equipmentSoftId')
+    .populate([
+      {
+        path: 'technicienId',
+        model: 'Technicien',
+        populate: { path: 'image', model: 'File' },
+      },])
+
+    res.status(200).json({ err: false, message: "Successful operation !", rows: tickets });
+
+  } catch (error) {
+    res.status(500).json({ err: true, message: error.message });
+
+  }
+};
 
 
 
@@ -331,28 +353,6 @@ exports.addTasksListRapportTicket = async (req, res) => {
     res.status(500).json({ err: true, message: error.message });
   }
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// upload files
-
-
-
-
-
-
 
 // Add file to a ticket
 exports.ticketAddFile = async (req, res) => {

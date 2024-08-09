@@ -5,9 +5,9 @@ import { BackendService } from 'src/app/services/backend.service';
 import Observer from 'src/app/services/observer';
 import { SharedService } from 'src/app/services/shared.service';
 import { environment } from 'src/environments/environment';
-import { DatePipe } from '@angular/common';
 import { AddUpdateTiketesCustomerComponent } from '../add-update-tiketes-customer/add-update-tiketes-customer.component';
 import { RaisenCancelTiketesComponent } from '../raisen-cancel-tiketes/raisen-cancel-tiketes.component';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-list-tiketes-customer',
@@ -19,7 +19,7 @@ import { RaisenCancelTiketesComponent } from '../raisen-cancel-tiketes/raisen-ca
 })
 export class ListTiketesCustomerComponent implements OnInit {
   id_contract
-  id_client = "667ad209b69856844b46c3b9"
+  id_client = ""
   listTickets: any = []
   public rateMovie = 1;
   selectedTicket: any;
@@ -28,10 +28,11 @@ export class ListTiketesCustomerComponent implements OnInit {
   pageSize = 5;
   pageSizes = [5, 10, 15];
   term: any;
-  constructor(private route: ActivatedRoute, private backendService: BackendService, public sharedService: SharedService, private modalService: NgbModal, private router: Router) { }
+  constructor(private route: ActivatedRoute, private authService:AuthService, private backendService: BackendService, public sharedService: SharedService, private modalService: NgbModal, private router: Router) { }
 
 
   ngOnInit(): void {
+    this.id_client = this.authService.getAuthUser().user._id
     this.id_contract = this.route.snapshot.paramMap.get("id");
     this.getListTicketsForClient()
   }
@@ -39,6 +40,7 @@ export class ListTiketesCustomerComponent implements OnInit {
     await this.backendService.get(`${environment.apiUrl}/ticket/getAllTicketByClientIdAndContract/${this.id_client}/${this.id_contract}`).subscribe(
       new Observer().OBSERVER_GET((response) => {
         this.listTickets = response.rows;
+        console.log(this.listTickets)
       })
     );
   }
@@ -74,5 +76,6 @@ export class ListTiketesCustomerComponent implements OnInit {
   openDetails(ticket: any, content: TemplateRef<any>) {
     this.selectedTicket = ticket;
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
+    console.log(this.selectedTicket)
   }
 }

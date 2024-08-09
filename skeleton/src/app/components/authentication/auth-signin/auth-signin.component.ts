@@ -26,12 +26,12 @@ export class AuthSigninComponent {
       this.isLoggingIn = true;
 
       this.apiService.login(this.form.value).subscribe(response => {
-        sessionStorage.setItem('accessToken', response.accessToken);
-        sessionStorage.setItem('refreshToken', response.refreshToken);
-        sessionStorage.setItem('_id', response.payload.user._id);
-        sessionStorage.setItem('authority', response.payload.user.authority);
+        // sessionStorage.setItem('accessToken', response.accessToken);
+         localStorage.setItem('REFRESH_TOKEN', response.refreshToken);
+        // sessionStorage.setItem('_id', response.payload.user._id);
+         localStorage.setItem('AUTHORITY', response.payload.user.authority);
         
-        this.router.navigate(['/sample-page']);
+        this.router.navigate(['main/sample-page']);
       }, error => {
         this.isLoggingIn = false;
         console.error('Error logging in:', error);

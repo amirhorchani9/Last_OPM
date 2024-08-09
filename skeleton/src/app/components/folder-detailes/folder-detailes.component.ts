@@ -527,7 +527,7 @@ console.log(this.newListOfFiles);
     modalRef.componentInstance.add = true;
   }
   goToTickets() {
-    this.router.navigate(['/test/listTickets'])
+    this.router.navigate(['main/test/listTickets'])
   }
   addtemsToContract(id?: any) {
     const modalRef = this.modalService.open(AffecteTeamsComponent);

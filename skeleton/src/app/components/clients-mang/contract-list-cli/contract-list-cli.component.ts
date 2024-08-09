@@ -5,25 +5,28 @@ import { BackendService } from 'src/app/services/backend.service';
 import Observer from 'src/app/services/observer';
 import { SharedService } from 'src/app/services/shared.service';
 import { environment } from 'src/environments/environment';
-
+import { AuthService } from 'src/app/services/auth.service';
 @Component({
   selector: 'app-contract-list-cli',
   templateUrl: './contract-list-cli.component.html',
   styleUrls: ['./contract-list-cli.component.scss']
 })
 export class ContractListCliComponent implements OnInit {
-  id_user: string = "66b0c6b1ddbb6fff0da35135";
+  id_user;
   listContrct: any = []
-  constructor(private backendService: BackendService, public sharedService: SharedService, private modalService: NgbModal, private router: Router) { }
+  constructor(private backendService: BackendService, public sharedService: SharedService, private modalService: NgbModal,     private authService: AuthService,private router: Router) { }
 
   ngOnInit(): void {
+    this.id_user = this.authService.getAuthUser().user._id
+    ;
+    // console.log(this.id_user)
     this.getlistContractFoClient()
     // this.calculatePeriods("21-06-2024","18-06-2024")
   }
   async getlistContractFoClient() {
     await this.backendService.get(`${environment.apiUrl}/client/getListContractByClient/${this.id_user}`).subscribe(
       new Observer().OBSERVER_GET((response) => {
-        console.log(response)
+        // console.log(response)
         this.listContrct = response.rows;
       })
     );

@@ -5,18 +5,16 @@
     </button>
 </div>
 <div class="modal-body">
-
-
-        <form class="form" name="form" #f="ngForm" (ngSubmit)="this.Onsubmit(f)">
-            <file-upload [(ngModel)]="Filelists" name="Filelists" required></file-upload>
-
-
-
-
-
-<div class="modal-footer">
-    <button type="submit" [disabled]="f.invalid" class="btn btn-outline-primary">Upload Now</button>
-    <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Fermer</button>
-</div>
-</form>
+    <form class="form" name="form" #f="ngForm" (ngSubmit)="Onsubmit(f)">
+        <h6>Contrat Signé :</h6>
+        <file-upload [(ngModel)]="FilelistsContratSigne" name="ContratSigne" required></file-upload>
+        <br>
+        <h6>Matrice D'escalade :</h6>
+        <file-upload [(ngModel)]="FilelistsMatriceDescalade" name="MatriceDescalade" required></file-upload>
+        <br>
+        <div class="modal-footer">
+            <button type="submit" [disabled]="f.invalid" class="btn btn-outline-primary">Upload Now</button>
+            <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Fermer</button>
+        </div>
+    </form>
 </div>

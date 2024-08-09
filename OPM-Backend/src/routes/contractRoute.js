@@ -17,7 +17,10 @@ router.post('/updateVisitePrev', contractController.updateVisitePrev);
 router.get('/getListTemsAffected/:_id', contractController.getListTemsAffected);
 
 // affectOledCustemer
-router.post('/addlistFileContract', upload.array('files'), contractController.addFileToContract);
+router.post('/addlistFileContract', upload.fields([
+    { name: 'contratSigneFiles', maxCount: 10 },
+    { name: 'matriceDescaladeFiles', maxCount: 10 }
+  ]), contractController.addFileToContract);
 router.put('/updateContract', contractController.updateContract);
 router.post('/deleteContract', contractController.deleteContract);
 router.post('/deleteUserfromContract', contractController.deleteUserfromContract);

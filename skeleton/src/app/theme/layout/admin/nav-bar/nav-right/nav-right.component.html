@@ -56,16 +56,16 @@
   </li>
   <!-- <li (click)="this.visibleUserList = !this.visibleUserList;"><a href="javascript:" class="displayChatbox"><i class="icon feather icon-mail"></i></a></li> -->
   <li>
-    <div class="dropdown drp-user" ngbDropdown placement="auto">
+    <div class="dropdown drp-user" ngbDropdown placement="auto" *ngIf="user$ | async as user">
       <a href="javascript:" ngbDropdownToggle data-toggle="dropdown">
-        <img [src]="userImage" class="img-radius user-profile-image" alt="User-Profile-Image" />
-        <span class="user-name">{{ userName }} {{ lastName }}</span>
+        <img [src]="user.userImage" class="img-radius user-profile-image" alt="User-Profile-Image" />
+        <span class="user-name">{{ user.userName }} {{ user.lastName }}</span>
         <!-- <i class="icon feather icon-settings"></i> -->
       </a>
       <div class="dropdown-menu dropdown-menu-right profile-notification" ngbDropdownMenu>
         <div class="pro-head">
-          <img [src]="userImage" class="img-radius" alt="User-Profile-Image" />
-          <span class="user-name">{{ userName }} {{ lastName }}</span>
+          <img [src]="user.userImage" class="img-radius" alt="User-Profile-Image" />
+          <span class="user-name">{{ user.userName }} {{ user.lastName }}</span>
           <a class="dud-logout" title="Logout" (click)="logout()" style="cursor: pointer">
             <i class="feather icon-log-out"></i>
           </a>

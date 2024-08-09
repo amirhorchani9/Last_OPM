@@ -63,16 +63,13 @@ exports.login = async (req, res) => {
     }
     var contract;
     var folder ;
-    var image;
     var nameFolder = null
     if (user.authority == "client"){
       contract = await Contract.findById(user.contractId);
       folder = await Folder.find({clientId:user._id})
        nameFolder =folder[0].name 
-       console
-       image=folder[0].logo
     }
-    const payload = {user, contract,folder:nameFolder,image};
+    const payload = {user, contract,folder:nameFolder};
     const { accessToken, refreshToken } = await tokenGen.generateToken(user);
     res.setHeader('Authorization', `Bearer ${accessToken}`);
     //res.setHeader('Refresh-Token', refreshToken); it will be sent with httpOnly cookie 
